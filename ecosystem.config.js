@@ -23,6 +23,18 @@ if (fs.existsSync(envFile)) {
 module.exports = {
   apps: [
     {
+      name:        'dvaplus-bot',
+      script:      'bot.py',
+      interpreter: 'python3',
+      autorestart: true,
+      watch:       false,
+      max_memory_restart: '128M',
+      log_date_format:    'YYYY-MM-DD HH:mm:ss',
+      error_file:  'logs/bot-err.log',
+      out_file:    'logs/bot-out.log',
+      merge_logs:  true,
+    },
+    {
       name:             'dvaplus',
       script:           'server.js',
       instances:        1,
