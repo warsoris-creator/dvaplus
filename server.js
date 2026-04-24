@@ -24,33 +24,29 @@ const WORKER_URL     = (process.env.WORKER_URL    || '').replace(/\/$/, '');
 const DATA_FILE = path.join(__dirname, 'projects.json');
 const UPLOADS   = path.join(__dirname, 'uploads');
 
-// ── Отправка через CF Worker (обход блокировки Telegram) ──
-function sendViaWorker(ids, text) {
-  if (!WORKER_URL || !ids.length) {
-    console.log('[notify] WORKER_URL или ids не заданы');
-    return Promise.resolve();
-  }
-  const body = JSON.stringify({ ids, text });
+// ── Telegram через CF Worker-прокси ───────────────────
+// WORKER_URL = https://dvaplus-webhook.snaapsyx.workers.dev
+// Worker просто форвардит запросы на api.telegram.org
+function sendTelegram(chatId, text) {
+  if (!BOT_TOKEN) return Promise.resolve();
+  const proxy = (WORKER_URL || 'https://api.telegram.org').replace(/\/$/, '');
+  const body  = JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true });
   return new Promise((resolve) => {
-    const workerUrl = new URL(WORKER_URL + '/notify');
+    const target = new URL(`${proxy}/bot${BOT_TOKEN}/sendMessage`);
     const req = https.request({
-      hostname: workerUrl.hostname,
-      path:     workerUrl.pathname,
+      hostname: target.hostname,
+      path:     target.pathname,
       method:   'POST',
-      headers:  {
-        'Content-Type':    'application/json',
-        'Content-Length':  Buffer.byteLength(body),
-        'x-notify-secret': WEBHOOK_SECRET,
-      },
+      headers:  { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
     }, res => { res.resume(); res.on('end', resolve); });
-    req.on('error', e => { console.error('[notify]', e.message); resolve(); });
+    req.on('error', e => { console.error('[TG]', e.message); resolve(); });
     req.write(body);
     req.end();
   });
 }
 
 function notifyAll(text) {
-  return sendViaWorker(NOTIFY_IDS, text);
+  return Promise.all(NOTIFY_IDS.map(id => sendTelegram(id, text)));
 }
 
 if (!fs.existsSync(UPLOADS)) fs.mkdirSync(UPLOADS);
@@ -160,7 +156,7 @@ const server = http.createServer((req, res) => {
           const msg = update.message;
           if (msg && msg.text) {
             if (msg.text === '/start' || msg.text === '/id') {
-              await sendViaWorker([String(msg.chat.id)],
+              await sendTelegram(msg.chat.id,
                 `<b>ДваПлюс — бот заявок</b>\n\nВаш Chat ID: <code>${msg.chat.id}</code>`
               );
             }
