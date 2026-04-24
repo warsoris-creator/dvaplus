@@ -25,12 +25,12 @@ const DATA_FILE = path.join(__dirname, 'projects.json');
 const UPLOADS   = path.join(__dirname, 'uploads');
 
 // ── Отправка через CF Worker (обход блокировки Telegram) ──
-function notifyAll(text) {
-  if (!WORKER_URL || !NOTIFY_IDS.length) {
-    console.log('[notify] WORKER_URL или NOTIFY_IDS не заданы');
+function sendViaWorker(ids, text) {
+  if (!WORKER_URL || !ids.length) {
+    console.log('[notify] WORKER_URL или ids не заданы');
     return Promise.resolve();
   }
-  const body = JSON.stringify({ ids: NOTIFY_IDS, text });
+  const body = JSON.stringify({ ids, text });
   return new Promise((resolve) => {
     const workerUrl = new URL(WORKER_URL + '/notify');
     const req = https.request({
@@ -47,6 +47,10 @@ function notifyAll(text) {
     req.write(body);
     req.end();
   });
+}
+
+function notifyAll(text) {
+  return sendViaWorker(NOTIFY_IDS, text);
 }
 
 if (!fs.existsSync(UPLOADS)) fs.mkdirSync(UPLOADS);
@@ -156,8 +160,8 @@ const server = http.createServer((req, res) => {
           const msg = update.message;
           if (msg && msg.text) {
             if (msg.text === '/start' || msg.text === '/id') {
-              await sendTelegram(msg.chat.id,
-                `<b>ДваПлюс — бот заявок</b>\n\nВаш Chat ID: <code>${msg.chat.id}</code>\n\nДобавьте его в NOTIFY_IDS в .env`
+              await sendViaWorker([String(msg.chat.id)],
+                `<b>ДваПлюс — бот заявок</b>\n\nВаш Chat ID: <code>${msg.chat.id}</code>`
               );
             }
           }
