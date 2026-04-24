@@ -16,6 +16,7 @@ if (fs.existsSync(envFile)) {
 }
 
 const PORT           = parseInt(process.env.PORT) || 2250;
+const BOT_TOKEN      = process.env.BOT_TOKEN      || '';
 const NOTIFY_IDS     = (process.env.NOTIFY_IDS    || '').split(',').map(s => s.trim()).filter(Boolean);
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Z1488Z';

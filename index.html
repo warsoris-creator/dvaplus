@@ -951,6 +951,25 @@ body.admin-mode .card-admin-btns { display: flex; }
 .admin-upload-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.7); }
 .admin-upload-sub { font-size: 11px; color: var(--ink-3); }
 
+/* ── Upload progress ── */
+.admin-upload-progress {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(109,92,255,.07); border: 1px solid rgba(109,92,255,.15);
+  border-radius: 8px; padding: 8px 12px; margin-top: 10px; font-size: 12px;
+}
+.admin-upload-progress-name {
+  flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: rgba(255,255,255,.7);
+}
+.admin-upload-progress-track {
+  width: 80px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.1); flex-shrink: 0;
+}
+.admin-upload-progress-fill {
+  height: 100%; border-radius: 2px; background: var(--accent);
+  transition: width .15s ease;
+}
+.admin-upload-progress-pct { color: var(--accent); font-weight: 600; flex-shrink: 0; min-width: 30px; text-align: right; }
+
 /* ── Image grid ── */
 .admin-images-list {
   display: grid;
@@ -2230,7 +2249,7 @@ body.admin-mode .card-admin-btns { display: flex; }
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== ADMIN PANEL =====
-const API = 'http://localhost:4200/api';
+const API = '/api';
 const GRADS = [
   'radial-gradient(ellipse at 30% 40%, oklch(0.5 0.2 25), oklch(0.3 0.15 10))',
   'radial-gradient(ellipse at 30% 40%, oklch(0.55 0.22 290), oklch(0.25 0.18 265))',
@@ -2308,7 +2327,7 @@ function resetPreview() {
     '<div class="admin-preview-hint" id="pPreviewHint"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><circle cx="7" cy="6" r=".5" fill="currentColor"/><circle cx="10" cy="6" r=".5" fill="currentColor"/></svg>Введите ссылку — превью загрузится автоматически</div>';
 }
 function loadPreview(link) {
-  const src = 'http://localhost:4200/api/preview?url=' + encodeURIComponent(link);
+  const src = '/api/preview?url=' + encodeURIComponent(link);
   const box = document.getElementById('pPreviewBox');
   box.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="admin-preview-spinner"></div><span style="font-size:11px;color:var(--ink-3)">Загружаем скриншот…</span></div>';
   const img = new Image();
@@ -2336,13 +2355,40 @@ function handleFileSelect(files) {
 async function uploadFile(file) {
   const fd = new FormData();
   fd.append('file', file);
+
+  // Show progress bar
+  const barId = 'upbar_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+  const barHtml = `<div id="${barId}" class="admin-upload-progress">
+    <span class="admin-upload-progress-name">${file.name}</span>
+    <div class="admin-upload-progress-track"><div class="admin-upload-progress-fill" style="width:0%"></div></div>
+    <span class="admin-upload-progress-pct">0%</span>
+  </div>`;
+  const list = document.getElementById('pImagesList');
+  list.insertAdjacentHTML('beforeend', barHtml);
+  const bar = document.getElementById(barId);
+
   try {
-    const r = await fetch(API + '/upload', { method: 'POST', body: fd });
-    const d = await r.json();
-    if (d.url) {
-      _uploadedUrls.push('http://localhost:4200' + d.url);
-      renderImageThumbs();
-    }
+    await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', API + '/upload');
+      xhr.upload.onprogress = e => {
+        if (e.lengthComputable) {
+          const pct = Math.round(e.loaded / e.total * 100);
+          bar.querySelector('.admin-upload-progress-fill').style.width = pct + '%';
+          bar.querySelector('.admin-upload-progress-pct').textContent = pct + '%';
+        }
+      };
+      xhr.onload = () => {
+        bar.remove();
+        try {
+          const d = JSON.parse(xhr.responseText);
+          if (d.url) { _uploadedUrls.push(d.url); renderImageThumbs(); }
+        } catch {}
+        resolve();
+      };
+      xhr.onerror = () => { bar.remove(); reject(new Error('network error')); };
+      xhr.send(fd);
+    });
   } catch(e) { console.error('upload error', e); }
 }
 
@@ -2394,7 +2440,7 @@ async function adminSaveProject() {
   // Gather imageUrls: uploaded photos first; fall back to preview if link is set and no photos
   const imageUrls = _uploadedUrls.length > 0
     ? [..._uploadedUrls]
-    : (link ? ['http://localhost:4200/api/preview?url=' + encodeURIComponent(link)] : []);
+    : (link ? ['/api/preview?url=' + encodeURIComponent(link)] : []);
 
   if (!name) {
     const f = document.getElementById('pName').closest('.admin-field');
