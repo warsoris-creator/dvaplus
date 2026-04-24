@@ -1,0 +1,14 @@
+{
+  "name": "dvaplus",
+  "version": "1.0.0",
+  "description": "ДваПлюс — web studio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "setup-webhook": "node bot-setup.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

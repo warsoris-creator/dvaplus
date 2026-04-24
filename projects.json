@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "name": "E-commerce",
+    "desc": "Интернет-магазин с чистым чекаутом. Без лишнего — только путь к покупке. Быстрая загрузка, понятный UX, высокая конверсия.",
+    "type": "e-commerce",
+    "focus": "conversion",
+    "link": "",
+    "imageUrls": [],
+    "gradient": 0,
+    "stats": [
+      {
+        "k": "конверсия",
+        "v": "+38%"
+      },
+      {
+        "k": "тип",
+        "v": "shop"
+      },
+      {
+        "k": "срок",
+        "v": "21 д."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "SaaS Product",
+    "desc": "Дашборд, онбординг, личный кабинет. Интерфейс, который не мешает работать. Продуманная архитектура компонентов.",
+    "type": "saas",
+    "focus": "retention",
+    "link": "",
+    "imageUrls": [],
+    "gradient": 1,
+    "stats": [
+      {
+        "k": "retention",
+        "v": "+61%"
+      },
+      {
+        "k": "тип",
+        "v": "saas"
+      },
+      {
+        "k": "фокус",
+        "v": "retention"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Mobile-first",
+    "desc": "Тач-оптимизация, быстрая загрузка, жест вместо клика. Телефон — главный экран. Core Web Vitals в зелёной зоне.",
+    "type": "mobile",
+    "focus": "speed",
+    "link": "",
+    "imageUrls": [],
+    "gradient": 2,
+    "stats": [
+      {
+        "k": "LCP",
+        "v": "0.8s"
+      },
+      {
+        "k": "тип",
+        "v": "mobile"
+      },
+      {
+        "k": "CLS",
+        "v": "0"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Editorial / Media",
+    "desc": "Лонгриды, редакционная типографика, контент как главный герой. SEO-оптимизация и читаемость на любом устройстве.",
+    "type": "media",
+    "focus": "content",
+    "link": "",
+    "imageUrls": [],
+    "gradient": 3,
+    "stats": [
+      {
+        "k": "время",
+        "v": "+4 мин"
+      },
+      {
+        "k": "тип",
+        "v": "media"
+      },
+      {
+        "k": "SEO",
+        "v": "top-3"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Edtech-платформа",
+    "desc": "Сайт-воронка и платформа обучения. Когортные запуски, прогресс, понятные состояния для студентов и преподавателей.",
+    "type": "platform",
+    "focus": "retention",
+    "link": "https://etoy.com/",
+    "imageUrls": [
+      "http://localhost:4200/api/preview?url=https%3A%2F%2Fetoy.com%2F"
+    ],
+    "gradient": 4,
+    "stats": [
+      {
+        "k": "тип",
+        "v": "platform"
+      },
+      {
+        "k": "фокус",
+        "v": "retention"
+      }
+    ]
+  },
+  {
+    "id": 1776975541420,
+    "name": "Фашист",
+    "desc": "Фашист",
+    "type": "Фашист",
+    "focus": "Фашист",
+    "link": "https://redstyle.art/",
+    "imageUrls": [
+      "http://localhost:4200/api/preview?url=https%3A%2F%2Fredstyle.art%2F"
+    ],
+    "gradient": 0,
+    "stats": [
+      {
+        "k": "тип",
+        "v": "Фашист"
+      },
+      {
+        "k": "фокус",
+        "v": "Фашист"
+      }
+    ]
+  }
+]
