@@ -16,35 +16,37 @@ if (fs.existsSync(envFile)) {
 }
 
 const PORT           = parseInt(process.env.PORT) || 2250;
-const BOT_TOKEN      = process.env.BOT_TOKEN      || '';
 const NOTIFY_IDS     = (process.env.NOTIFY_IDS    || '').split(',').map(s => s.trim()).filter(Boolean);
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Z1488Z';
+const WORKER_URL     = (process.env.WORKER_URL    || '').replace(/\/$/, '');
 
 const DATA_FILE = path.join(__dirname, 'projects.json');
 const UPLOADS   = path.join(__dirname, 'uploads');
 
-// ── Telegram helper ────────────────────────────────────
-function sendTelegram(chatId, text) {
-  if (!BOT_TOKEN) return Promise.resolve();
+// ── Отправка через CF Worker (обход блокировки Telegram) ──
+function notifyAll(text) {
+  if (!WORKER_URL || !NOTIFY_IDS.length) {
+    console.log('[notify] WORKER_URL или NOTIFY_IDS не заданы');
+    return Promise.resolve();
+  }
+  const body = JSON.stringify({ ids: NOTIFY_IDS, text });
   return new Promise((resolve) => {
-    const body = JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true });
+    const workerUrl = new URL(WORKER_URL + '/notify');
     const req = https.request({
-      hostname: 'api.telegram.org',
-      path:     `/bot${BOT_TOKEN}/sendMessage`,
+      hostname: workerUrl.hostname,
+      path:     workerUrl.pathname,
       method:   'POST',
-      headers:  { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+      headers:  {
+        'Content-Type':    'application/json',
+        'Content-Length':  Buffer.byteLength(body),
+        'x-notify-secret': WEBHOOK_SECRET,
+      },
     }, res => { res.resume(); res.on('end', resolve); });
-    req.on('error', e => { console.error('[TG]', e.message); resolve(); });
+    req.on('error', e => { console.error('[notify]', e.message); resolve(); });
     req.write(body);
     req.end();
   });
-}
-
-async function notifyAll(text) {
-  for (const id of NOTIFY_IDS) {
-    await sendTelegram(id, text);
-  }
 }
 
 if (!fs.existsSync(UPLOADS)) fs.mkdirSync(UPLOADS);
