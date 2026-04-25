@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>ДваПлюс — сайты и цифровые продукты</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%230a0b16'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236D5CFF'/%3E%3Cstop offset='1' stop-color='%233DD6E4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M9 16h14M16 9v14' stroke='url(%23g)' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%230a0b16'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236D5CFF'/%3E%3Cstop offset='1' stop-color='%233DD6E4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='14' font-weight='800' font-family='Inter,system-ui,sans-serif' fill='url(%23g)'%3E%2B%2B%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -244,7 +244,7 @@ a { color: inherit; text-decoration: none; }
 .device__side { padding: 20px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; background: rgba(0,0,0,.15); }
 .device__logo { display: flex; align-items: center; gap: 8px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
 .device__logo b { font-family: 'Space Grotesk'; font-size: 13px; }
-.device__brand-mark { width: 24px; height: 24px; border-radius: 8px; display: grid; place-items: center; background: var(--grad); color: #080912; font-family: 'Space Grotesk'; font-size: 13px; font-weight: 700; letter-spacing: -0.04em; box-shadow: 0 0 24px rgba(109,92,255,.32); }
+.device__brand-mark { width: 28px; height: 24px; border-radius: 8px; display: grid; place-items: center; background: var(--grad); color: #080912; font-family: 'Space Grotesk'; font-size: 13px; font-weight: 700; letter-spacing: -0.04em; box-shadow: 0 0 24px rgba(109,92,255,.32); }
 .device__side ul { list-style: none; display: grid; gap: 4px; flex: 1; }
 .device__side li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 12px; color: var(--ink-2); }
 .device__side li.is-active { background: linear-gradient(90deg, rgba(109,92,255,.2), transparent); color: var(--ink-0); }
@@ -292,7 +292,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 2;
 }
 .badge__orb { width: 42px; height: 42px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 30px rgba(109,92,255,.6); position: relative; }
-.badge__orb::after { content: '+'; position: absolute; inset: 0; display: grid; place-items: center; color: #000; font-weight: 700; font-size: 22px; }
+.badge__orb::after { content: '++'; position: absolute; inset: 0; display: grid; place-items: center; color: #000; font-weight: 800; font-size: 17px; letter-spacing: -0.08em; }
 .hero__badge b { display: block; font-family: 'Space Grotesk'; font-size: 22px; font-weight: 500; }
 .hero__badge span { font-size: 10px; }
 
@@ -814,11 +814,29 @@ body.admin-mode .card-admin-btns { display: flex; }
 #adminAuthForm {
   display: flex; flex-direction: column; align-items: center;
   text-align: center; padding: 64px 40px 56px;
+  position: relative; overflow: hidden;
+}
+#adminAuthForm::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(109,92,255,.16), transparent 42%),
+    radial-gradient(circle at 80% 88%, rgba(61,214,228,.10), transparent 42%);
+  pointer-events: none;
+}
+#adminAuthForm > * { position: relative; z-index: 1; }
+.admin-modal.admin-modal--auth {
+  width: min(640px, calc(100vw - 40px));
+  min-height: 0;
+}
+.admin-modal.admin-modal--auth #adminAuthForm {
+  min-height: min(560px, calc(100vh - 80px));
+  justify-content: center;
 }
 .admin-logo {
-  font-family:'Space Grotesk'; font-weight:700; font-size:40px;
+  font-family:'Space Grotesk'; font-weight:800; font-size:42px;
   background:var(--grad); -webkit-background-clip:text; background-clip:text;
-  color:transparent; margin-bottom:8px;
+  color:transparent; margin-bottom:10px; letter-spacing:-0.04em;
 }
 .admin-modal h3 {
   font-family:'Space Grotesk'; font-size:20px; font-weight:600;
@@ -1262,7 +1280,27 @@ body.admin-mode .card-admin-btns { display: flex; }
   animation: projIn .35s cubic-bezier(.22,1,.36,1);
 }
 .svc-inner {
-  max-width: 880px; width: 100%; margin: 70px 24px 80px; position: relative;
+  width: min(920px, calc(100% - 48px));
+  margin: 72px auto 80px;
+  padding: 34px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 40% at 80% 0%, rgba(61,214,228,.13), transparent 62%),
+    linear-gradient(135deg, rgba(255,255,255,.065), rgba(255,255,255,.018));
+  border: 1px solid var(--line-strong);
+  border-radius: 24px;
+  box-shadow: 0 48px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.svc-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at 70% 24%, black 0%, transparent 68%);
 }
 .svc-close {
   position: fixed; top: 28px; right: 32px;
@@ -1274,21 +1312,22 @@ body.admin-mode .card-admin-btns { display: flex; }
 }
 .svc-close:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.2); }
 
-.svc-num { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--ink-3); margin-bottom: 20px; letter-spacing: .08em; text-transform: uppercase; }
-.svc-hero { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 32px; }
+.svc-num { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--ink-2); margin-bottom: 20px; letter-spacing: .08em; text-transform: uppercase; padding: 7px 11px; border: 1px solid var(--line); border-radius: 100px; background: rgba(0,0,0,.18); }
+.svc-num::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 12px rgba(61,214,228,.8); }
+.svc-hero { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 32px; position: relative; z-index: 1; }
 .svc-icon-lg { width: 80px; height: 80px; border-radius: 20px; flex-shrink: 0; }
 .svc-title { font-family: 'Space Grotesk'; font-size: clamp(30px,4vw,52px); font-weight: 500; letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 14px; }
 .svc-lede { font-size: 16px; color: var(--ink-1); line-height: 1.7; max-width: 640px; }
 
 .svc-metrics {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 32px 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 32px 0; position: relative; z-index: 1;
 }
 .svc-metric {
-  padding: 22px 16px; background: linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  padding: 22px 16px; background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.015));
   border: 1px solid var(--line); border-radius: 16px; text-align: center;
-  transition: border-color .3s;
+  transition: border-color .3s, transform .3s;
 }
-.svc-metric:hover { border-color: var(--line-strong); }
+.svc-metric:hover { border-color: var(--line-strong); transform: translateY(-2px); }
 .svc-metric__val {
   font-family: 'Space Grotesk'; font-size: 34px; font-weight: 500;
   background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -1296,7 +1335,7 @@ body.admin-mode .card-admin-btns { display: flex; }
 }
 .svc-metric__label { font-size: 11px; color: var(--ink-3); }
 
-.svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; position: relative; z-index: 1; }
 .svc-block {
   padding: 26px;
   background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
@@ -1321,7 +1360,7 @@ body.admin-mode .card-admin-btns { display: flex; }
 }
 
 .svc-cta-row {
-  display: flex; gap: 12px; align-items: center; margin-top: 40px;
+  display: flex; gap: 12px; align-items: center; margin-top: 40px; position: relative; z-index: 1;
   padding-top: 32px; border-top: 1px solid var(--line); flex-wrap: wrap;
 }
 
@@ -1329,8 +1368,9 @@ body.admin-mode .card-admin-btns { display: flex; }
   .svc-grid { grid-template-columns: 1fr; }
   .svc-block--full { grid-column: auto; }
   .svc-metrics { grid-template-columns: 1fr 1fr; }
-  .svc-inner { margin: 48px 16px 60px; }
+  .svc-inner { width: calc(100% - 32px); margin: 56px auto 60px; padding: 22px; border-radius: 20px; }
   .svc-hero { flex-direction: column; gap: 16px; }
+  .svc-cta-row .btn { width: 100%; justify-content: center; }
 }
 </style>
 </head>
@@ -1350,7 +1390,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       <circle class="pl-ring pl-ring--1" cx="60" cy="60" r="54" fill="none" stroke="url(#pl-g)" stroke-width="1.2" stroke-dasharray="4 6" />
       <circle class="pl-ring pl-ring--2" cx="60" cy="60" r="40" fill="none" stroke="url(#pl-g)" stroke-width="1" stroke-dasharray="2 10" />
       <g class="pl-mark">
-        <path d="M42 60h36M60 42v36" stroke="url(#pl-g)" stroke-width="6" stroke-linecap="round"/>
+        <text x="60" y="73" text-anchor="middle" font-size="34" font-weight="800" font-family="Inter, sans-serif" fill="url(#pl-g)">++</text>
       </g>
     </svg>
     <div class="preloader__bar"><span></span></div>
@@ -1383,7 +1423,7 @@ body.admin-mode .card-admin-btns { display: flex; }
             <stop offset="1" stop-color="#3DD6E4"/>
           </linearGradient>
         </defs>
-        <path d="M12 20h16M20 12v16" stroke="url(#nav-g)" stroke-width="3" stroke-linecap="round"/>
+        <text x="20" y="25" text-anchor="middle" font-size="17" font-weight="800" font-family="Inter, sans-serif" fill="url(#nav-g)">++</text>
       </svg>
     </span>
     <span class="nav__wordmark">
@@ -1462,7 +1502,7 @@ body.admin-mode .card-admin-btns { display: flex; }
         <div class="device__body">
           <aside class="device__side">
             <div class="device__logo">
-              <span class="device__brand-mark">Д+</span>
+              <span class="device__brand-mark">++</span>
               <b>ДваПлюс</b>
             </div>
             <ul>
@@ -1587,7 +1627,7 @@ body.admin-mode .card-admin-btns { display: flex; }
 
   <div class="services__grid">
 
-    <article class="card card--lg" data-tilt onclick="openService(1)" style="cursor:pointer">
+    <article class="card card--lg" data-tilt role="button" tabindex="0" onclick="openService(1)" onkeydown="serviceCardKey(event, 1)">
       <div class="card__glow"></div>
       <div class="card__head">
         <span class="card__num mono">/01</span>
@@ -1616,7 +1656,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       </div>
     </article>
 
-    <article class="card" data-tilt onclick="openService(2)" style="cursor:pointer">
+    <article class="card" data-tilt role="button" tabindex="0" onclick="openService(2)" onkeydown="serviceCardKey(event, 2)">
       <div class="card__glow"></div>
       <div class="card__head">
         <span class="card__num mono">/02</span>
@@ -1634,7 +1674,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       </div>
     </article>
 
-    <article class="card" data-tilt onclick="openService(3)" style="cursor:pointer">
+    <article class="card" data-tilt role="button" tabindex="0" onclick="openService(3)" onkeydown="serviceCardKey(event, 3)">
       <div class="card__glow"></div>
       <div class="card__head">
         <span class="card__num mono">/03</span>
@@ -1654,7 +1694,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       </div>
     </article>
 
-    <article class="card card--wide" data-tilt onclick="openService(4)" style="cursor:pointer">
+    <article class="card card--wide" data-tilt role="button" tabindex="0" onclick="openService(4)" onkeydown="serviceCardKey(event, 4)">
       <div class="card__glow"></div>
       <div class="card__head">
         <span class="card__num mono">/04</span>
@@ -1866,7 +1906,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       <p>«Сайт — это инструмент бизнеса. Мы делаем так, чтобы им было удобно пользоваться команде, и так, чтобы цифры продукта становились лучше».</p>
       <footer class="voice__foot">
         <div class="voice__who">
-          <div class="avatar avatar--1">Д+</div>
+          <div class="avatar avatar--1">++</div>
           <div>
             <b>ДваПлюс</b>
             <span class="mono">наш подход</span>
@@ -1902,7 +1942,7 @@ body.admin-mode .card-admin-btns { display: flex; }
     </article>
 
     <article class="voice voice--metric">
-      <b class="voice__big">Д+</b>
+      <b class="voice__big">++</b>
       <span class="mono">всегда вдвоём и больше</span>
       <div class="voice__dots"><i></i><i></i><i></i><i></i><i></i></div>
       <span class="mono">дизайнер · инженер · проджект</span>
@@ -2053,7 +2093,7 @@ body.admin-mode .card-admin-btns { display: flex; }
 
 <!-- ===== ADMIN PANEL ===== -->
 <div class="admin-overlay" id="adminOverlay">
-  <div class="admin-modal" id="adminModal">
+  <div class="admin-modal admin-modal--auth" id="adminModal">
 
     <!-- AUTH -->
     <div id="adminAuthForm">
@@ -2271,9 +2311,10 @@ document.querySelector('.nav__brand').addEventListener('click', function(e) {
 // ── Admin open/close ───────────────────────────────────
 function openAdmin() {
   document.getElementById('adminOverlay').classList.add('is-open');
+  document.getElementById('adminModal').classList.add('admin-modal--auth');
   document.getElementById('adminPass').value = '';
   document.getElementById('adminErr').style.display = 'none';
-  document.getElementById('adminAuthForm').style.display = 'block';
+  document.getElementById('adminAuthForm').style.display = 'flex';
   document.getElementById('adminPanel').style.display = 'none';
   setTimeout(() => document.getElementById('adminPass').focus(), 50);
 }
@@ -2286,6 +2327,7 @@ document.getElementById('adminPass').addEventListener('keydown', e => { if (e.ke
 function adminLogin() {
   if (document.getElementById('adminPass').value === 'Z1488Z') {
     document.getElementById('adminAuthForm').style.display = 'none';
+    document.getElementById('adminModal').classList.remove('admin-modal--auth');
     const panel = document.getElementById('adminPanel');
     panel.style.display = 'flex';
     panel.style.flexDirection = 'column';
@@ -2759,6 +2801,12 @@ function openService(id) {
 function closeService() {
   document.getElementById('svcOverlay').classList.remove('is-open');
   document.body.style.overflow = '';
+}
+
+function serviceCardKey(e, id) {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  e.preventDefault();
+  openService(id);
 }
 
 document.getElementById('svcOverlay').addEventListener('click', e => {
