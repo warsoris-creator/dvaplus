@@ -406,15 +406,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ========= CASES ========= */
 .cases__controls { display: flex; align-items: center; gap: 12px; justify-self: end; }
-.cases__dots { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 28px; flex-wrap: wrap; }
-.cases__dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: rgba(255,255,255,.18); border: none; cursor: pointer; padding: 0;
-  transition: background .3s, width .3s, border-radius .3s;
-  flex-shrink: 0;
-}
-.cases__dot.is-active { background: var(--violet); width: 22px; border-radius: 4px; }
-.cases__dot:hover:not(.is-active) { background: rgba(255,255,255,.36); }
+
 .nav-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); color: var(--ink-0); cursor: pointer; display: grid; place-items: center; transition: all .3s; }
 .nav-btn:hover { background: var(--glass-strong); border-color: rgba(255,255,255,.2); transform: translateY(-2px); }
 
@@ -1344,6 +1336,12 @@ body.admin-mode .card-admin-btns { display: flex; }
 }
 .svc-metric__label { font-size: 11px; color: var(--ink-3); }
 
+.svc-goals-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0 28px; position: relative; z-index: 1; }
+.svc-goal { padding: 18px 20px; background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.01)); border: 1px solid var(--line); border-radius: 14px; transition: border-color .3s; }
+.svc-goal:hover { border-color: var(--line-strong); }
+.svc-goal__num { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--teal); letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+.svc-goal__text { font-size: 14px; color: var(--ink-1); line-height: 1.45; }
+
 .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; position: relative; z-index: 1; }
 .svc-block {
   padding: 26px;
@@ -1374,6 +1372,7 @@ body.admin-mode .card-admin-btns { display: flex; }
 }
 
 @media (max-width: 640px) {
+  .svc-goals-grid { grid-template-columns: 1fr; }
   .svc-grid { grid-template-columns: 1fr; }
   .svc-block--full { grid-column: auto; }
   .svc-metrics { grid-template-columns: 1fr 1fr; }
@@ -1651,11 +1650,6 @@ body.admin-mode .card-admin-btns { display: flex; }
       </div>
       <h3>Сайты под ключ</h3>
       <p>Делаем сайты для малого бизнеса и специалистов. Продумываем структуру под задачу, адаптируем под мобильные и делаем понятным для пользователя.</p>
-      <ul class="card__list">
-        <li><span class="mono">— </span>структура под задачу бизнеса</li>
-        <li><span class="mono">— </span>адаптив под мобильные устройства</li>
-        <li><span class="mono">— </span>запуск и сопровождение</li>
-      </ul>
       <div class="card__foot">
         <span class="mono">по запросу</span>
         <button class="card__go">
@@ -1759,7 +1753,6 @@ body.admin-mode .card-admin-btns { display: flex; }
     </article>
 
   </div>
-  <div class="cases__dots" id="casesDots"></div>
 </section>
 
 <!-- ============ PROCESS / CONNECT ============ -->
@@ -1821,22 +1814,22 @@ body.admin-mode .card-admin-btns { display: flex; }
           </div>
         </div>
         <div class="connect__contacts-body">
-          <a href="https://t.me/dvaplus2plus" class="connect__contact-link">
+          <a href="https://t.me/dva_plus" class="connect__contact-link">
             <div class="connect__contact-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
             </div>
             <div class="connect__contact-info">
               <b>Telegram</b>
-              <span>@dvaplus2plus</span>
+              <span>@dva_plus</span>
             </div>
           </a>
-          <a href="mailto:hi@dvaplus2plus.ru" class="connect__contact-link">
+          <a href="mailto:dvaplus-site@mail.ru" class="connect__contact-link">
             <div class="connect__contact-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
             </div>
             <div class="connect__contact-info">
               <b>Почта</b>
-              <span>hi@dvaplus2plus.ru</span>
+              <span>dvaplus-site@mail.ru</span>
             </div>
           </a>
         </div>
@@ -2012,8 +2005,8 @@ body.admin-mode .card-admin-btns { display: flex; }
     </form>
 
     <div class="cta__alt">
-      <a href="#"><span class="mono">tg</span> · @dvaplus2plus</a>
-      <a href="#"><span class="mono">mail</span> · <span class="__cf_email__" data-cfemail="284041684c5e4958445d5b065a5d">[email&#160;protected]</span></a>
+      <a href="#"><span class="mono">tg</span> · @dva_plus</a>
+      <a href="#"><span class="mono">mail</span> · dvaplus-site@mail.ru</a>
       <a href="#"><span class="mono">гео</span> · удалённо</a>
     </div>
   </div>
@@ -2632,7 +2625,6 @@ function renderCases() {
     rail.insertBefore(card, cta);
   });
   rail.scrollLeft = 0;
-  renderDots();
 }
 
 // ── Project detail modal ───────────────────────────────
@@ -2711,7 +2703,8 @@ const SVC_DATA = {
     icon: `<svg viewBox="0 0 48 48" width="42" height="42"><rect x="6" y="10" width="36" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 18h36" stroke="currentColor" stroke-width="1.5"/><path d="M18 26l-4 4 4 4M30 26l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`,
     iconClass: 'card__icon--a',
     title: 'Сайты под ключ',
-    lede: 'Делаем сайты для малого бизнеса и специалистов.<br><br>В зависимости от задачи сайт решает разные цели: привлечение клиентов, презентация компании или услуг, портфолио и личный бренд, удобная точка контакта с клиентами.<br><br>Продумываем структуру под задачу бизнеса, адаптируем под мобильные устройства и делаем сайт понятным и удобным для пользователя.',
+    lede: 'Делаем сайты для малого бизнеса и специалистов. Продумываем структуру под задачу бизнеса, адаптируем под мобильные устройства и делаем сайт понятным и удобным для пользователя.',
+    goals: ['Привлечение клиентов', 'Презентация компании или услуг', 'Портфолио и личный бренд', 'Удобная точка контакта с клиентами'],
     metrics: [
       { val: 'с нуля', label: 'без шаблонов' },
       { val: '100%', label: 'адаптив' },
@@ -2788,6 +2781,11 @@ function openService(id) {
         ${b.items.map(item => `<div class="svc-block__item">${item}</div>`).join('')}
       </div>
     </div>`).join('');
+  const goalsHtml = s.goals
+    ? '<div class="svc-goals-grid">' + s.goals.map((g, i) =>
+        '<div class="svc-goal"><span class="svc-goal__num">0' + (i + 1) + '</span><div class="svc-goal__text">' + g + '</div></div>'
+      ).join('') + '</div>'
+    : '';
   document.getElementById('svcInner').innerHTML = `
     <div class="svc-num">${s.num}</div>
     <div class="svc-hero">
@@ -2797,6 +2795,7 @@ function openService(id) {
         <p class="svc-lede">${s.lede}</p>
       </div>
     </div>
+    ${goalsHtml}
     <div class="svc-metrics">${metricsHtml}</div>
     <div class="svc-grid">${blocksHtml}</div>
     <div class="svc-cta-row">
@@ -2982,41 +2981,6 @@ document.querySelectorAll('[data-tilt]').forEach(el => {
 });
 
 // ============ CASES RAIL SCROLL ============
-function renderDots() {
-  const rail = document.getElementById('casesRail');
-  const wrap = document.getElementById('casesDots');
-  if (!rail || !wrap) return;
-  const cards = Array.from(rail.querySelectorAll('.case'));
-  wrap.innerHTML = '';
-  if (cards.length <= 1) { wrap.style.display = 'none'; return; }
-  wrap.style.display = 'flex';
-  cards.forEach((card, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'cases__dot' + (i === 0 ? ' is-active' : '');
-    dot.setAttribute('aria-label', 'Слайд ' + (i + 1));
-    dot.addEventListener('click', () => {
-      rail.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
-    });
-    wrap.appendChild(dot);
-  });
-}
-
-function updateActiveDot() {
-  const rail = document.getElementById('casesRail');
-  const wrap = document.getElementById('casesDots');
-  if (!rail || !wrap) return;
-  const cards = Array.from(rail.querySelectorAll('.case'));
-  const mid = rail.scrollLeft + rail.clientWidth / 2;
-  let activeIdx = 0, minDist = Infinity;
-  cards.forEach((card, i) => {
-    const dist = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid);
-    if (dist < minDist) { minDist = dist; activeIdx = i; }
-  });
-  wrap.querySelectorAll('.cases__dot').forEach((dot, i) => {
-    dot.classList.toggle('is-active', i === activeIdx);
-  });
-}
-
 (function() {
   const rail = document.getElementById('casesRail');
   if (!rail) return;
@@ -3027,7 +2991,12 @@ function updateActiveDot() {
       rail.scrollBy({ left: dir * cardW, behavior: 'smooth' });
     });
   });
-  rail.addEventListener('scroll', updateActiveDot, { passive: true });
+  rail.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      rail.scrollBy({ left: e.deltaY * 2.5, behavior: 'auto' });
+    }
+  }, { passive: false });
 })();
 
 // ============ CHIPS TOGGLE ============
