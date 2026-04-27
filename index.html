@@ -593,13 +593,12 @@ a { color: inherit; text-decoration: none; }
   outline: none; border-color: rgba(var(--violet-rgb),.6); background: var(--glass-strong);
   box-shadow: 0 0 0 3px rgba(var(--violet-rgb),.15);
 }
-.cta__budget { grid-column: span 2; }
-.cta__budget > .mono { display: block; margin-bottom: 10px; }
+
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chips button { padding: 10px 16px; background: var(--glass); border: 1px solid var(--line); border-radius: 100px; color: var(--ink-1); font-family: 'Space Grotesk'; font-size: 13px; cursor: pointer; transition: all .3s; }
 .chips button:hover { background: var(--glass-strong); color: var(--ink-0); }
 .chips button.is-active { background: var(--grad); color: #000; border-color: transparent; }
-.cta__submit { grid-column: span 2; justify-self: start; }
+.cta__form-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .cta__alt { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
 .cta__alt a { transition: color .3s; }
 .cta__alt a:hover { color: var(--violet); }
@@ -676,7 +675,7 @@ a { color: inherit; text-decoration: none; }
   .footer__cols { grid-template-columns: 1fr; }
   .cta__wrap { padding: 32px 24px; }
   .cta__form { grid-template-columns: 1fr; }
-  .cta__form-full, .cta__budget, .cta__submit { grid-column: auto; }
+  .cta__form-full { grid-column: auto; }
   .case { flex: 0 0 320px; }
   .phase { grid-template-columns: 30px 1fr 60px; }
   .phase__bar, .phase__state { grid-column: 2 / 4; }
@@ -1440,7 +1439,7 @@ body.admin-mode .card-admin-btns { display: flex; }
     </span>
   </a>
   <nav class="nav__links">
-    <a href="#services" class="nav__link is-active">Услуги</a>
+    <a href="#services" class="nav__link">Услуги</a>
     <a href="#work">Кейсы</a>
     <a href="#process">Процесс</a>
     <a href="#stack">Стек</a>
@@ -1504,7 +1503,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       <article class="glass hero__device" data-tilt>
         <header class="device__bar">
           <span class="device__dots"><i></i><i></i><i></i></span>
-          <span class="device__url mono">dvaplus2plus.ru / project-map</span>
+          <span class="device__url mono">dvaplus.site</span>
           <span class="device__meta mono">концепт · запуск</span>
         </header>
         <div class="device__body">
@@ -1988,25 +1987,21 @@ body.admin-mode .card-admin-btns { display: flex; }
         <span class="mono">о проекте</span>
         <textarea id="cf-message" rows="2" placeholder="две строки о продукте и задаче — этого хватит"></textarea>
       </label>
-      <div class="cta__budget">
-        <span class="mono">ориентировочный бюджет</span>
-        <div class="chips" id="cf-chips">
-          <button type="button" onclick="selectBudget(this)">до 300k</button>
-          <button type="button" onclick="selectBudget(this)" class="is-active">300k—800k</button>
-          <button type="button" onclick="selectBudget(this)">800k—2M</button>
-          <button type="button" onclick="selectBudget(this)">2M+</button>
-          <button type="button" onclick="selectBudget(this)">обсудим</button>
-        </div>
+      <div class="cta__form-full cta__form-actions">
+        <button type="submit" class="btn btn--xl btn--primary" id="cf-submit">
+          <span id="cf-submit-text">Отправить заявку</span>
+          <span class="btn__arrow" id="cf-submit-arrow">→</span>
+        </button>
+        <a href="https://t.me/dva_plus" target="_blank" rel="noopener" class="btn btn--xl btn--ghost">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          <span>Написать в Telegram</span>
+        </a>
       </div>
-      <button type="submit" class="btn btn--xl btn--primary cta__submit" id="cf-submit">
-        <span id="cf-submit-text">Отправить заявку</span>
-        <span class="btn__arrow" id="cf-submit-arrow">→</span>
-      </button>
     </form>
 
     <div class="cta__alt">
-      <a href="#"><span class="mono">tg</span> · @dva_plus</a>
-      <a href="#"><span class="mono">mail</span> · dvaplus-site@mail.ru</a>
+      <a href="https://t.me/dva_plus" target="_blank" rel="noopener"><span class="mono">tg</span> · @dva_plus</a>
+      <a href="mailto:dvaplus-site@mail.ru"><span class="mono">mail</span> · dvaplus-site@mail.ru</a>
       <a href="#"><span class="mono">гео</span> · удалённо</a>
     </div>
   </div>
@@ -2825,11 +2820,6 @@ document.getElementById('svcOverlay').addEventListener('click', e => {
 });
 
 // ── Contact form ───────────────────────────────────────
-function selectBudget(btn) {
-  document.querySelectorAll('#cf-chips button').forEach(b => b.classList.remove('is-active'));
-  btn.classList.add('is-active');
-}
-
 async function submitContact(e) {
   e.preventDefault();
   const btn     = document.getElementById('cf-submit');
@@ -2838,7 +2828,6 @@ async function submitContact(e) {
   const name    = document.getElementById('cf-name').value.trim();
   const contact = document.getElementById('cf-contact').value.trim();
   const message = document.getElementById('cf-message').value.trim();
-  const budget  = (document.querySelector('#cf-chips .is-active') || {}).textContent || '';
 
   if (!name && !contact && !message) return;
 
@@ -2850,7 +2839,7 @@ async function submitContact(e) {
     const res = await fetch('/api/contact', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ name, contact, message, budget }),
+      body:    JSON.stringify({ name, contact, message }),
     });
     if (res.ok) {
       txtEl.textContent = 'Отправлено — ждите ответа';
@@ -2994,11 +2983,25 @@ document.querySelectorAll('[data-tilt]').forEach(el => {
   rail.addEventListener('wheel', e => {
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       e.preventDefault();
-      rail.scrollBy({ left: e.deltaY * 2.5, behavior: 'auto' });
+      rail.scrollBy({ left: e.deltaY * 0.7, behavior: 'auto' });
     }
   }, { passive: false });
 })();
 
+
+// ── Active nav link on scroll ─────────────────────────
+(function() {
+  const links = document.querySelectorAll('.nav__links a[href^="#"]');
+  const ids = Array.from(links).map(a => a.getAttribute('href').slice(1));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+  ids.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+})();
 // ============ CHIPS TOGGLE ============
 document.querySelectorAll('.chips').forEach(group => {
   group.querySelectorAll('button').forEach(b => {
