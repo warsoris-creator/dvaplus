@@ -406,6 +406,15 @@ a { color: inherit; text-decoration: none; }
 
 /* ========= CASES ========= */
 .cases__controls { display: flex; align-items: center; gap: 12px; justify-self: end; }
+.cases__dots { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 28px; flex-wrap: wrap; }
+.cases__dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,.18); border: none; cursor: pointer; padding: 0;
+  transition: background .3s, width .3s, border-radius .3s;
+  flex-shrink: 0;
+}
+.cases__dot.is-active { background: var(--violet); width: 22px; border-radius: 4px; }
+.cases__dot:hover:not(.is-active) { background: rgba(255,255,255,.36); }
 .nav-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); color: var(--ink-0); cursor: pointer; display: grid; place-items: center; transition: all .3s; }
 .nav-btn:hover { background: var(--glass-strong); border-color: rgba(255,255,255,.2); transform: translateY(-2px); }
 
@@ -1433,7 +1442,7 @@ body.admin-mode .card-admin-btns { display: flex; }
   </a>
   <nav class="nav__links">
     <a href="#services" class="nav__link is-active">Услуги</a>
-    <a href="#work">Кейсы</a>
+    <a href="#work">Кейсы</a>
     <a href="#process">Процесс</a>
     <a href="#stack">Стек</a>
     <a href="#voices">Отзывы</a>
@@ -1600,15 +1609,15 @@ body.admin-mode .card-admin-btns { display: flex; }
 <!-- ============ MARQUEE ============ -->
 <section class="marquee" aria-hidden="true">
   <div class="marquee__track">
-    <span>Сайты под ключ</span><span class="marquee__sep">✦</span>
-    <span>Чистый код</span><span class="marquee__sep">✦</span>
-    <span>Дизайн системы</span><span class="marquee__sep">✦</span>
+    <span>Сайты под ключ</span><span class="marquee__sep">✦</span>
+    <span>Чистый код</span><span class="marquee__sep">✦</span>
+    <span>Дизайн системы</span><span class="marquee__sep">✦</span>
     <span>Первые продажи</span><span class="marquee__sep">✦</span>
     <span>Прозрачность</span><span class="marquee__sep">✦</span>
     <span>Скорость 0.9s LCP</span><span class="marquee__sep">✦</span>
-    <span>Сайты под ключ</span><span class="marquee__sep">✦</span>
-    <span>Чистый код</span><span class="marquee__sep">✦</span>
-    <span>Дизайн системы</span><span class="marquee__sep">✦</span>
+    <span>Сайты под ключ</span><span class="marquee__sep">✦</span>
+    <span>Чистый код</span><span class="marquee__sep">✦</span>
+    <span>Дизайн системы</span><span class="marquee__sep">✦</span>
     <span>Первые продажи</span><span class="marquee__sep">✦</span>
     <span>Прозрачность</span><span class="marquee__sep">✦</span>
     <span>Скорость 0.9s LCP</span><span class="marquee__sep">✦</span>
@@ -1640,12 +1649,12 @@ body.admin-mode .card-admin-btns { display: flex; }
           <path d="M18 26l-4 4 4 4M30 26l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
-      <h3>Сайты под ключ</h3>
-      <p>От мудборда до продакшна. Продуктовые лендинги, корпоративные сайты и сложные multi-page структуры с CMS.</p>
+      <h3>Сайты под ключ</h3>
+      <p>Делаем сайты для малого бизнеса и специалистов. Продумываем структуру под задачу, адаптируем под мобильные и делаем понятным для пользователя.</p>
       <ul class="card__list">
-        <li><span class="mono">— </span>Next.js · Astro · Tilda Pro</li>
-        <li><span class="mono">— </span>CMS: Strapi, Sanity, Directus</li>
-        <li><span class="mono">— </span>от 14 дней до запуска</li>
+        <li><span class="mono">— </span>структура под задачу бизнеса</li>
+        <li><span class="mono">— </span>адаптив под мобильные устройства</li>
+        <li><span class="mono">— </span>запуск и сопровождение</li>
       </ul>
       <div class="card__foot">
         <span class="mono">по запросу</span>
@@ -1667,7 +1676,7 @@ body.admin-mode .card-admin-btns { display: flex; }
         </svg>
       </div>
       <h3>Разработка и код</h3>
-      <p>Чистая архитектура, типизированный TS, покрытые тесты. Сайт, который через год ещё приятно открывать в IDE.</p>
+      <p>Чистая архитектура, типизированный TS, покрытые тесты. Сайт, который через год ещё приятно открывать в IDE.</p>
       <div class="card__foot">
         <span class="mono">TS · React · Node</span>
         <button class="card__go"><span>→</span></button>
@@ -1686,8 +1695,8 @@ body.admin-mode .card-admin-btns { display: flex; }
           <path d="M24 4v6M24 38v6M4 24h6M38 24h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
-      <h3>Дизайн-система</h3>
-      <p>Токены, компоненты, правила. Один язык для сайта, приложения и презентаций команды продаж.</p>
+      <h3>Дизайн-система</h3>
+      <p>Токены, компоненты, правила. Один язык для сайта, приложения и презентаций команды продаж.</p>
       <div class="card__foot">
         <span class="mono">Figma · Tokens Studio</span>
         <button class="card__go"><span>→</span></button>
@@ -1750,6 +1759,7 @@ body.admin-mode .card-admin-btns { display: flex; }
     </article>
 
   </div>
+  <div class="cases__dots" id="casesDots"></div>
 </section>
 
 <!-- ============ PROCESS / CONNECT ============ -->
@@ -1847,7 +1857,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       <span class="section__tag mono">04 · стек</span>
       <h2 class="section__title">Инженерия,<br>а не самодеятельность.</h2>
     </div>
-    <p class="section__lede stack__lede">Мы не гонимся за модой. Выбираем инструменты, на которых несколько лет строили реальные продакшны. Вот из чего собирается типичный сайт.</p>
+    <p class="section__lede stack__lede">Мы не гонимся за модой. Выбираем инструменты, на которых несколько лет строили реальные продакшны. Вот из чего собирается типичный сайт.</p>
   </header>
 
   <div class="stack__board">
@@ -1881,7 +1891,7 @@ body.admin-mode .card-admin-btns { display: flex; }
       <div class="tag">Sentry</div>
     </div>
     <div class="stack__col">
-      <div class="stack__col-head mono">дизайн · growth</div>
+      <div class="stack__col-head mono">дизайн · growth</div>
       <div class="tag">Figma</div>
       <div class="tag">Tokens Studio</div>
       <div class="tag">Posthog</div>
@@ -1969,7 +1979,7 @@ body.admin-mode .card-admin-btns { display: flex; }
   <div class="cta__wrap glass">
     <div class="cta__glow"></div>
     <span class="section__tag mono">06 · запуск</span>
-    <h2 class="cta__title">Давайте соберём<br>ваш <em>следующий</em> сайт.</h2>
+    <h2 class="cta__title">Давайте соберём<br>ваш <em>следующий</em> сайт.</h2>
     <p class="cta__lede">Ответим по делу. Пришлём короткую смету после первого разговора. Без воды и многочасовых созвонов.</p>
 
     <form class="cta__form" id="contactForm" onsubmit="submitContact(event)">
@@ -1986,7 +1996,7 @@ body.admin-mode .card-admin-btns { display: flex; }
         <textarea id="cf-message" rows="2" placeholder="две строки о продукте и задаче — этого хватит"></textarea>
       </label>
       <div class="cta__budget">
-        <span class="mono">ориентировочный бюджет</span>
+        <span class="mono">ориентировочный бюджет</span>
         <div class="chips" id="cf-chips">
           <button type="button" onclick="selectBudget(this)">до 300k</button>
           <button type="button" onclick="selectBudget(this)" class="is-active">300k—800k</button>
@@ -2025,8 +2035,8 @@ body.admin-mode .card-admin-btns { display: flex; }
     <div class="footer__cols">
       <div>
         <span class="mono footer__h">услуги</span>
-        <a href="#">Сайты под ключ</a>
-        <a href="#">Дизайн-системы</a>
+        <a href="#">Сайты под ключ</a>
+        <a href="#">Дизайн-системы</a>
         <a href="#">Разработка</a>
       </div>
       <div>
@@ -2621,6 +2631,8 @@ function renderCases() {
       </div>`;
     rail.insertBefore(card, cta);
   });
+  rail.scrollLeft = 0;
+  renderDots();
 }
 
 // ── Project detail modal ───────────────────────────────
@@ -2699,16 +2711,16 @@ const SVC_DATA = {
     icon: `<svg viewBox="0 0 48 48" width="42" height="42"><rect x="6" y="10" width="36" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 18h36" stroke="currentColor" stroke-width="1.5"/><path d="M18 26l-4 4 4 4M30 26l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`,
     iconClass: 'card__icon--a',
     title: 'Сайты под ключ',
-    lede: 'От мудборда до продакшна. Продуктовые лендинги, корпоративные сайты и сложные multi-page структуры с CMS. Мы строим сайты, которые через год всё ещё работают на вас — и не требуют переделки.',
+    lede: 'Делаем сайты для малого бизнеса и специалистов.<br><br>В зависимости от задачи сайт решает разные цели: привлечение клиентов, презентация компании или услуг, портфолио и личный бренд, удобная точка контакта с клиентами.<br><br>Продумываем структуру под задачу бизнеса, адаптируем под мобильные устройства и делаем сайт понятным и удобным для пользователя.',
     metrics: [
-      { val: '14+', label: 'дней до запуска' },
-      { val: '100%', label: 'прозрачность' },
-      { val: '5★', label: 'средний рейтинг' },
+      { val: 'с нуля', label: 'без шаблонов' },
+      { val: '100%', label: 'адаптив' },
+      { val: 'под вас', label: 'структура сайта' },
     ],
     blocks: [
-      { label: 'Что входит', items: ['Смысловая структура и карта сайта', 'UX/UI дизайн в Figma до пикселя', 'Фронтенд: Next.js, Astro или Tilda Pro', 'Интеграция CMS (Strapi / Sanity / Directus)', 'SEO-базис, OpenGraph, аналитика с первого дня', 'Поддержка после запуска — не бросаем'] },
-      { label: 'Технологии', items: ['Next.js · Astro · Tilda Pro', 'TypeScript + React', 'Tailwind CSS', 'Strapi · Sanity · Directus', 'Vercel · Netlify · VPS'] },
-      { label: 'Как работаем', items: ['01 — Бриф и погружение в задачу', '02 — Структура и прототип', '03 — Дизайн в Figma', '04 — Разработка и тестирование', '05 — Запуск, аналитика, первые правки'], full: true },
+      { label: 'Разработка', items: ['Пишем код с нуля — без шаблонов и перегрузки.', 'Сайт быстро загружается, стабильно работает и остаётся удобным для доработки и масштабирования.'] },
+      { label: 'Дизайн', items: ['Разрабатываем дизайн под ваши задачи и стиль бизнеса.', 'Делаем не просто «красиво», а так, чтобы сайт был понятным и удобным для пользователя.'] },
+      { label: 'Запуск и сопровождение', items: ['После запуска помогаем подключить формы, базовую аналитику и понять, как пользователи взаимодействуют с сайтом.', 'При необходимости подсказываем, как привлекать клиентов через сайт и какие точки роста улучшить.'], full: true },
     ],
   },
   2: {
@@ -2970,15 +2982,52 @@ document.querySelectorAll('[data-tilt]').forEach(el => {
 });
 
 // ============ CASES RAIL SCROLL ============
+function renderDots() {
+  const rail = document.getElementById('casesRail');
+  const wrap = document.getElementById('casesDots');
+  if (!rail || !wrap) return;
+  const cards = Array.from(rail.querySelectorAll('.case'));
+  wrap.innerHTML = '';
+  if (cards.length <= 1) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'flex';
+  cards.forEach((card, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'cases__dot' + (i === 0 ? ' is-active' : '');
+    dot.setAttribute('aria-label', 'Слайд ' + (i + 1));
+    dot.addEventListener('click', () => {
+      rail.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+    });
+    wrap.appendChild(dot);
+  });
+}
+
+function updateActiveDot() {
+  const rail = document.getElementById('casesRail');
+  const wrap = document.getElementById('casesDots');
+  if (!rail || !wrap) return;
+  const cards = Array.from(rail.querySelectorAll('.case'));
+  const mid = rail.scrollLeft + rail.clientWidth / 2;
+  let activeIdx = 0, minDist = Infinity;
+  cards.forEach((card, i) => {
+    const dist = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid);
+    if (dist < minDist) { minDist = dist; activeIdx = i; }
+  });
+  wrap.querySelectorAll('.cases__dot').forEach((dot, i) => {
+    dot.classList.toggle('is-active', i === activeIdx);
+  });
+}
+
 (function() {
   const rail = document.getElementById('casesRail');
   if (!rail) return;
   document.querySelectorAll('.nav-btn[data-scroll]').forEach(btn => {
     btn.addEventListener('click', () => {
       const dir = parseInt(btn.dataset.scroll, 10);
-      rail.scrollBy({ left: dir * 540, behavior: 'smooth' });
+      const cardW = rail.querySelector('.case') ? rail.querySelector('.case').offsetWidth + 20 : 540;
+      rail.scrollBy({ left: dir * cardW, behavior: 'smooth' });
     });
   });
+  rail.addEventListener('scroll', updateActiveDot, { passive: true });
 })();
 
 // ============ CHIPS TOGGLE ============
